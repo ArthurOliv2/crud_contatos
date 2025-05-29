@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($contatos as $contato)
+                            @forelse ($contatos as $contato)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $contato->nome }}</td>
@@ -70,6 +70,7 @@
                                         </form>
                                     </td>
                                 </tr>
+                                
                                 <div class="modal fade" id="modalEndereco{{ $contato->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $contato->id}}" aria-hidden="true">   
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -85,8 +86,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>      
-                            @endforeach
+                                </div>  
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Nenhum contato encontrado.</td>
+                                </tr>  
+                            @endforelse
                         </tbody>
                     </table>
 
