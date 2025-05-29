@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContatoController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ContatoController::class, 'index'])->name('index');
+Route::resource('contatos', ContatoController::class)->except(['index']);
