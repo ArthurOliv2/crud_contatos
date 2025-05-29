@@ -21,7 +21,12 @@
                                 </button>
                         </form>
                     </div>
-
+                    
+                    @if (@session('success'))
+                        <div id="alert-message" class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -91,4 +96,19 @@
     </div>                
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const alert = document.getElementById('alert-message');
+            if (alert) {
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                    alert.classList.add('fade');
+                    setTimeout(() => alert.remove(), 300);
+                }, 3000);
+            }
+        });
+    </script>
+@endpush
 
