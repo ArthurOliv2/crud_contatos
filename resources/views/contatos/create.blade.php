@@ -77,20 +77,53 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const telefone = document.getElementById('telefone');
+            const cep = document.getElementById('cep');
+            const rua = document.getElementById('rua');
+            const cidade = document.getElementById('cidade');
+            const estado = document.getElementById('estado');
+            const complemento = document.getElementById('complemento');
+
             if (telefone) {
                 IMask(telefone, {
                     mask: [
                         { mask: '(00) 00000-0000'},
+                        { mask: '(00) 0000-0000'}
                     ]
                 });
             } 
 
-            const cep = document.getElementById('cep');
             if (cep) {
-                IMask(cep, {
-                    mask: '00000-000'
-                });
-            }
-        });
+                IMask(cep, { mask: '00000-000' });
+            cep.addEventListener('blur', function () {
+                const rawCep = cep.value.replace(/\D/g, '');
+
+                if (rawCep.length === 8) {
+                    fetch(`https://viacep.com.br/ws/${rawCep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                rua.value = data.logradouro || '';
+                                rua.readOnly = !!data.logradouro;
+
+                                cidade.value = data.localidade || '';
+                                cidade.readOnly = !!data.localidade;
+
+                                estado.value = data.uf || '';
+                                estado.readOnly = !!data.estado;
+
+                                complemento.value = data.complemento || '';
+                                complemento.readOnly = !!data.complemento;
+
+                            } else {
+                                alert('CEP não encontrado.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('Erro ao consultar o CEP.');
+                        });
+                }
+            });
+        }
+    });
     </script>
 @endpush
