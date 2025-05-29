@@ -72,3 +72,26 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const telefone = document.getElementById('telefone');
+            if (telefone) {
+                IMask(telefone, {
+                    mask: [
+                        { mask: '(00) 00000-0000'},
+                    ]
+                });
+            } 
+
+            const cep = document.getElementById('cep');
+            if (cep) {
+                IMask(cep, {
+                    mask: '00000-000'
+                });
+            }
+        });
+    </script>
+@endpush
