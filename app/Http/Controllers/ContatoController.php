@@ -99,6 +99,6 @@ class ContatoController extends Controller
     {
         $contato->delete();
 
-        return redirect()->route('index')->with('succes', 'Contato excluido com sucesso');
+        return redirect()->route('index')->with('success', 'Contato excluido com sucesso');
     }
 }
